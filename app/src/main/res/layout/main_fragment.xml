@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  tools:context=".any.MainFragment">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.button.MaterialButton
+      android:id="@+id/saveButton"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="16dp"
+      android:layout_marginEnd="8dp"
+      android:text="@string/save_a_new_secret"
+      android:textColor="@android:color/white"
+      app:backgroundTint="#404040"
+      app:icon="@android:drawable/ic_menu_save"
+      app:iconTint="@android:color/white"
+      app:iconGravity="textTop"
+      app:iconPadding="32dp"
+      app:layout_constraintBottom_toTopOf="@+id/readButton"
+      app:layout_constraintEnd_toStartOf="@+id/copyButton"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+      android:id="@+id/copyButton"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_marginStart="8dp"
+      android:layout_marginTop="16dp"
+      android:layout_marginEnd="16dp"
+      android:text="@string/copy_an_existing_secret"
+      android:textColor="@android:color/white"
+      app:backgroundTint="#404040"
+      app:icon="@drawable/copy"
+      app:iconGravity="textTop"
+      app:iconPadding="32dp"
+      app:iconSize="32dp"
+      app:iconTint="#C0C0C0"
+      app:layout_constraintBottom_toTopOf="@+id/updateButton"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toEndOf="@+id/saveButton"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+      android:id="@+id/readButton"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="8dp"
+      android:layout_marginEnd="8dp"
+      android:text="@string/read_an_existing_secret"
+      android:textColor="@android:color/white"
+      app:backgroundTint="#404040"
+      app:icon="@android:drawable/ic_menu_view"
+      app:iconTint="@android:color/white"
+      app:iconGravity="textTop"
+      app:iconPadding="32dp"
+      app:layout_constraintBottom_toTopOf="@+id/deleteButton"
+      app:layout_constraintEnd_toStartOf="@+id/updateButton"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/saveButton" />
+
+    <com.google.android.material.button.MaterialButton
+      android:id="@+id/updateButton"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_marginStart="8dp"
+      android:layout_marginTop="8dp"
+      android:layout_marginEnd="16dp"
+      android:text="@string/update_an_existing_secret"
+      android:textColor="@android:color/white"
+      app:backgroundTint="#404040"
+      app:icon="@android:drawable/ic_menu_edit"
+      app:iconTint="@android:color/white"
+      app:iconGravity="textTop"
+      app:iconPadding="32dp"
+      app:layout_constraintBottom_toTopOf="@+id/exitButton"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toEndOf="@+id/readButton"
+      app:layout_constraintTop_toBottomOf="@+id/copyButton" />
+
+    <com.google.android.material.button.MaterialButton
+      android:id="@+id/deleteButton"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="8dp"
+      android:layout_marginEnd="8dp"
+      android:layout_marginBottom="16dp"
+      android:text="@string/delete_an_existing_secret"
+      android:textColor="@android:color/white"
+      app:backgroundTint="#404040"
+      app:icon="@android:drawable/ic_menu_delete"
+      app:iconTint="@android:color/white"
+      app:iconGravity="textTop"
+      app:iconPadding="32dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toStartOf="@+id/exitButton"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/readButton" />
+
+    <com.google.android.material.button.MaterialButton
+      android:id="@+id/exitButton"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_marginStart="8dp"
+      android:layout_marginTop="8dp"
+      android:layout_marginEnd="16dp"
+      android:layout_marginBottom="16dp"
+      android:text="@string/exit"
+      android:textColor="@android:color/white"
+      app:backgroundTint="#404040"
+      app:icon="@drawable/exit"
+      app:iconTint="#C0C0C0"
+      app:iconGravity="textTop"
+      app:iconPadding="32dp"
+      app:iconSize="32dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toEndOf="@+id/deleteButton"
+      app:layout_constraintTop_toBottomOf="@+id/updateButton" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
