@@ -7,7 +7,7 @@ on:
     branches: [master, develop]
 
 env:
-  java-version: '8'
+  java-version: '11'
   java-distribution: 'adopt'
 
 jobs:
