@@ -1,0 +1,19 @@
+<resources>
+  <string name="app_name">Secret Manager</string>
+  <string name="save_a_new_secret">Save a new secret</string>
+  <string name="copy_an_existing_secret">Copy an existing secret</string>
+  <string name="read_an_existing_secret">Read an existing secret</string>
+  <string name="update_an_existing_secret">Update an existing secret</string>
+  <string name="delete_an_existing_secret">Delete an existing secret</string>
+  <string name="exit">Exit</string>
+  <string name="secret_label">Secret label</string>
+  <string name="secret">Secret</string>
+  <string name="save">Save</string>
+  <string name="retype_secret">Retype secret</string>
+  <string name="copy_prompt">Please select a button to copy its secret.</string>
+  <string name="read_prompt">Please select a button to read its secret.</string>
+  <string name="update_prompt">Please select a button to update its secret.</string>
+  <string name="update">Update</string>
+  <string name="delete_prompt">Please select a button to delete its secret.</string>
+    <string name="empty_list_message">You haven\'t saved any secrets! Please save some.</string>
+</resources>
