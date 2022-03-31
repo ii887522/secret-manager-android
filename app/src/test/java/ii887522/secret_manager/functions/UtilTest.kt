@@ -5,7 +5,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class UtilTest {
-  @Test fun testContains() {
+  @Test fun `test contains`() {
     assertTrue("a" in 'a'..'a')
     assertFalse("b" in 'a'..'a')
     assertFalse("c" in 'a'..'a')

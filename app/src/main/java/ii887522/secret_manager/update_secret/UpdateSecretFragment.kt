@@ -21,20 +21,22 @@ class UpdateSecretFragment : Fragment() {
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
     (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
     activity?.title = "Update an existing secret"
-    binding = DataBindingUtil.inflate(inflater, R.layout.update_secret_fragment, container, false)
-    val adapter = SecretListAdapter {
-      findNavController().navigate(UpdateSecretFragmentDirections.actionUpdateSecretFragmentToUpdateSecretFormFragment(it.label))
-    }
-    binding.secretList.adapter = adapter
     viewModel = ViewModelProvider(
       this,
       UpdateSecretViewModelFactory(SecretManagerDatabase.getInstance((activity as AppCompatActivity).application).dao)
     )[UpdateSecretViewModel::class.java]
+    val adapter = SecretListAdapter {
+      findNavController()
+        .navigate(UpdateSecretFragmentDirections.actionUpdateSecretFragmentToUpdateSecretFormFragment(it.label))
+    }
     viewModel.secrets.observe(viewLifecycleOwner) {
       if (it === null) return@observe
-      binding.secrets = it
       adapter.submitList(it.sortedBy { secret -> secret.label.lowercase() })
     }
+    binding = DataBindingUtil.inflate(inflater, R.layout.update_secret_fragment, container, false)
+    binding.lifecycleOwner = viewLifecycleOwner
+    binding.viewModel = viewModel
+    binding.secretList.adapter = adapter
     return binding.root
   }
 }

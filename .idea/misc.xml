@@ -3,11 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/i/repos/secret-manager-android/app/src/main/res/layout-land/main_fragment.xml" value="0.33" />
+        <entry key="..\:/i/repos/secret-manager-android/app/src/main/res/layout-land/main_fragment.xml" value="0.264" />
         <entry key="..\:/i/repos/secret-manager-android/app/src/main/res/layout/copy_secret_fragment.xml" value="0.33" />
         <entry key="..\:/i/repos/secret-manager-android/app/src/main/res/layout/delete_secret_fragment.xml" value="0.33" />
         <entry key="..\:/i/repos/secret-manager-android/app/src/main/res/layout/main_activity.xml" value="0.26875" />
-        <entry key="..\:/i/repos/secret-manager-android/app/src/main/res/layout/main_fragment.xml" value="0.33" />
+        <entry key="..\:/i/repos/secret-manager-android/app/src/main/res/layout/main_fragment.xml" value="0.264" />
         <entry key="..\:/i/repos/secret-manager-android/app/src/main/res/layout/read_secret_fragment.xml" value="0.33" />
         <entry key="..\:/i/repos/secret-manager-android/app/src/main/res/layout/save_secret_form.xml" value="0.26197916666666665" />
         <entry key="..\:/i/repos/secret-manager-android/app/src/main/res/layout/save_secret_fragment.xml" value="0.35507246376811596" />

@@ -10,6 +10,10 @@ import ii887522.secret_manager.functions.contains
 import kotlinx.coroutines.launch
 
 class SaveSecretViewModel(private val dao: SecretManagerDao) : ViewModel() {
+  var secretLabel = ""
+  var secret = ""
+  var retypeSecret = ""
+
   private val _canShowLabelEmptyError = MutableLiveData(false)
   val canShowLabelEmptyError: LiveData<Boolean> get() = _canShowLabelEmptyError
 
@@ -28,16 +32,16 @@ class SaveSecretViewModel(private val dao: SecretManagerDao) : ViewModel() {
   private val _hasSavedSecret = MutableLiveData(false)
   val hasSavedSecret: LiveData<Boolean> get() = _hasSavedSecret
 
-  fun save(label: String, secret: String, retypeSecret: String) {
+  fun save() {
     viewModelScope.launch {
       when {
-        label.trim() == "" -> _canShowLabelEmptyError.value = true
-        label.trim() in dao.getAllSecrets().map { it.label } -> _canShowLabelExistError.value = true
+        secretLabel.trim() == "" -> _canShowLabelEmptyError.value = true
+        secretLabel.trim() in dao.getAllSecrets().map { it.label } -> _canShowLabelExistError.value = true
         secret !in ' '..'~' -> _canShowSecretBadCharError.value = true
         secret.length < 16 || secret.length > 64 -> _canShowSecretBadSizeError.value = true
         secret != retypeSecret -> _canShowSecretNotEqualError.value = true
         else -> {
-          dao.insert(Secret(label.trim(), secret))
+          dao.insert(Secret(secretLabel.trim(), secret))
           _hasSavedSecret.value = true
         }
       }

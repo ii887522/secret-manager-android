@@ -9,7 +9,10 @@ import ii887522.secret_manager.database.SecretManagerDao
 import ii887522.secret_manager.functions.contains
 import kotlinx.coroutines.launch
 
-class UpdateSecretFormViewModel(private val dao: SecretManagerDao) : ViewModel() {
+class UpdateSecretFormViewModel(private val dao: SecretManagerDao, val secretLabel: String) : ViewModel() {
+  var secret = ""
+  var retypeSecret = ""
+
   private val _canShowSecretBadCharError = MutableLiveData(false)
   val canShowSecretBadCharError: LiveData<Boolean> get() = _canShowSecretBadCharError
 
@@ -19,17 +22,18 @@ class UpdateSecretFormViewModel(private val dao: SecretManagerDao) : ViewModel()
   private val _canShowSecretNotEqualError = MutableLiveData(false)
   val canShowSecretNotEqualError: LiveData<Boolean> get() = _canShowSecretNotEqualError
 
-  private val _hasUpdatedSecret = MutableLiveData(false)
-  val hasUpdatedSecret: LiveData<Boolean> get() = _hasUpdatedSecret
+  private val _updatedSecret = MutableLiveData<Secret?>()
+  val updatedSecret: LiveData<Secret?> get() = _updatedSecret
 
-  fun update(label: String, secret: String, retypeSecret: String) {
+  fun update() {
     when {
       secret !in ' '..'~' -> _canShowSecretBadCharError.value = true
       secret.length < 16 || secret.length > 64 -> _canShowSecretBadSizeError.value = true
       secret != retypeSecret -> _canShowSecretNotEqualError.value = true
       else -> viewModelScope.launch {
-        dao.update(Secret(label, secret))
-        _hasUpdatedSecret.value = true
+        val secret = Secret(secretLabel, secret)
+        dao.update(secret)
+        _updatedSecret.value = secret
       }
     }
   }
@@ -46,7 +50,7 @@ class UpdateSecretFormViewModel(private val dao: SecretManagerDao) : ViewModel()
     _canShowSecretNotEqualError.value = false
   }
 
-  fun doneReactHasUpdatedSecret() {
-    _hasUpdatedSecret.value = false
+  fun doneReactUpdatedSecret() {
+    _updatedSecret.value = null
   }
 }

@@ -5,7 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Secret::class], version = 1, exportSchema = false) abstract class SecretManagerDatabase : RoomDatabase() {
+@Database(entities = [Secret::class], version = 1, exportSchema = false) abstract class SecretManagerDatabase :
+  RoomDatabase() {
+
   abstract val dao: SecretManagerDao
 
   companion object {
@@ -14,7 +16,9 @@ import androidx.room.RoomDatabase
     fun getInstance(context: Context): SecretManagerDatabase = synchronized(this) {
       var l_instance = instance
       if (l_instance === null) {
-        l_instance = Room.databaseBuilder(context.applicationContext, SecretManagerDatabase::class.java, "secret_manager")
+        l_instance = Room.databaseBuilder(
+          context.applicationContext, SecretManagerDatabase::class.java, "secret_manager"
+        )
           .fallbackToDestructiveMigration()
           .build()
         instance = l_instance
