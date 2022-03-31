@@ -25,22 +25,24 @@ class CopySecretFragment : Fragment() {
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
     (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
     activity?.title = "Copy an existing secret"
-    binding = DataBindingUtil.inflate(inflater, R.layout.copy_secret_fragment, container, false)
-    val adapter = SecretListAdapter {
-      (requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager).setPrimaryClip(ClipData.newPlainText("Secret", it.value))
-      Toast.makeText(context, "The secret of ${it.label} has been successfully copied!", Toast.LENGTH_LONG).show()
-      findNavController().navigateUp()
-    }
-    binding.secretList.adapter = adapter
     viewModel = ViewModelProvider(
       this,
       CopySecretViewModelFactory(SecretManagerDatabase.getInstance((activity as AppCompatActivity).application).dao)
     )[CopySecretViewModel::class.java]
+    val adapter = SecretListAdapter {
+      (requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
+        .setPrimaryClip(ClipData.newPlainText("Secret", it.value))
+      Toast.makeText(context, "The secret of ${it.label} has been successfully copied!", Toast.LENGTH_LONG).show()
+      findNavController().navigateUp()
+    }
     viewModel.secrets.observe(viewLifecycleOwner) {
       if (it === null) return@observe
-      binding.secrets = it
       adapter.submitList(it.sortedBy { secret -> secret.label.lowercase() })
     }
+    binding = DataBindingUtil.inflate(inflater, R.layout.copy_secret_fragment, container, false)
+    binding.lifecycleOwner = viewLifecycleOwner
+    binding.viewModel = viewModel
+    binding.secretList.adapter = adapter
     return binding.root
   }
 }

@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="ii887522.secret_manager">
   <application
-    android:allowBackup="false"
+    android:allowBackup="true"
+    android:fullBackupOnly="true"
     android:icon="@mipmap/favicon"
     android:roundIcon="@mipmap/favicon"
     android:label="@string/app_name"
     android:supportsRtl="false"
     android:theme="@style/Theme.MaterialComponents">
 
-    <activity android:name=".any.MainActivity" android:exported="true" android:configChanges="orientation|screenSize">
+    <activity android:name=".any.MainActivity" android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />

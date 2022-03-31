@@ -27,11 +27,6 @@
     <action
       android:id="@+id/action_mainFragment_to_deleteSecretFragment"
       app:destination="@id/deleteSecretFragment" />
-    <action
-      android:id="@+id/action_mainFragment_self"
-      app:destination="@id/mainFragment"
-      app:popUpTo="@id/mainFragment"
-      app:popUpToInclusive="true" />
   </fragment>
 
   <fragment

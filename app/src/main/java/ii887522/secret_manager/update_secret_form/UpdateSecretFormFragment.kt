@@ -21,40 +21,49 @@ class UpdateSecretFormFragment : Fragment() {
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
     (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
     activity?.title = "Update existing secret form"
-    binding = DataBindingUtil.inflate(inflater, R.layout.update_secret_form_fragment, container, false)
-    binding.label = UpdateSecretFormFragmentArgs.fromBundle(requireArguments()).secretLabel
     viewModel = ViewModelProvider(
       this,
-      UpdateSecretFormViewModelFactory(SecretManagerDatabase.getInstance((activity as AppCompatActivity).application).dao)
-    )[UpdateSecretFormViewModel::class.java]
-    binding.updateSecretButton.setOnClickListener {
-      viewModel.update(
-        requireNotNull(binding.label),
-        binding.secretTextField.editText?.text.toString(),
-        binding.retypeSecretTextField.editText?.text.toString()
+      UpdateSecretFormViewModelFactory(
+        SecretManagerDatabase.getInstance((activity as AppCompatActivity).application).dao,
+        UpdateSecretFormFragmentArgs.fromBundle(requireArguments()).secretLabel
       )
-    }
+    )[UpdateSecretFormViewModel::class.java]
     viewModel.canShowSecretBadCharError.observe(viewLifecycleOwner) {
       if (!it) return@observe
-      Toast.makeText(context, "Secret must only include 0..9 A-Z a-z !\"#\$%&'()*+,-./:;<=>?@[\\]^_`{|}~   Please try again.", Toast.LENGTH_LONG).show()
+      Toast.makeText(
+        context,
+        "Secret must only include 0..9 A-Z a-z !\"#\$%&'()*+,-./:;<=>?@[\\]^_`{|}~   Please try again.",
+        Toast.LENGTH_LONG
+      ).show()
       viewModel.doneShowSecretBadCharError()
     }
     viewModel.canShowSecretBadSizeError.observe(viewLifecycleOwner) {
       if (!it) return@observe
-      Toast.makeText(context, "Secret must have at least 16 characters and not greater than 64 characters! Please try again.", Toast.LENGTH_LONG).show()
+      Toast.makeText(
+        context,
+        "Secret must have at least 16 characters and not greater than 64 characters! Please try again.",
+        Toast.LENGTH_LONG
+      ).show()
       viewModel.doneShowSecretBadSizeError()
     }
     viewModel.canShowSecretNotEqualError.observe(viewLifecycleOwner) {
       if (!it) return@observe
-      Toast.makeText(context, "Retype secret differs from the first secret typed! Please try again.", Toast.LENGTH_LONG).show()
+      Toast.makeText(
+        context, "Retype secret differs from the first secret typed! Please try again.", Toast.LENGTH_LONG
+      ).show()
       viewModel.doneShowSecretNotEqualError()
     }
-    viewModel.hasUpdatedSecret.observe(viewLifecycleOwner) {
-      if (!it) return@observe
-      Toast.makeText(context, "The secret of ${binding.label} has been successfully updated!", Toast.LENGTH_LONG).show()
+    viewModel.updatedSecret.observe(viewLifecycleOwner) {
+      if (it === null) return@observe
+      Toast.makeText(context, "The secret of ${it.label} has been successfully updated!", Toast.LENGTH_LONG)
+        .show()
       findNavController().navigateUp()
-      viewModel.doneReactHasUpdatedSecret()
+      viewModel.doneReactUpdatedSecret()
     }
+    binding = DataBindingUtil.inflate(inflater, R.layout.update_secret_form_fragment, container, false)
+    binding.lifecycleOwner = viewLifecycleOwner
+    binding.viewModel = viewModel
+    binding.updateSecretButton.setOnClickListener { viewModel.update() }
     return binding.root
   }
 }

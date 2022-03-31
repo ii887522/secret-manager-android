@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.ListAdapter
 import ii887522.secret_manager.database.Secret
 import ii887522.secret_manager.databinding.SecretButtonBinding
 
-class SecretListAdapter(private val onClick: (Secret) -> Unit) : ListAdapter<Secret, SecretButtonHolder>(SecretDiffCallback()) {
+class SecretListAdapter(private val onClick: (Secret) -> Unit) :
+  ListAdapter<Secret, SecretButtonHolder>(SecretDiffCallback()) {
+
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
     SecretButtonHolder(SecretButtonBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 

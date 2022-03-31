@@ -13,19 +13,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import ii887522.secret_manager.R
 import ii887522.secret_manager.any.SecretListAdapter
-import ii887522.secret_manager.database.Secret
 import ii887522.secret_manager.database.SecretManagerDatabase
 import ii887522.secret_manager.databinding.DeleteSecretFragmentBinding
 
 class DeleteSecretFragment : Fragment() {
   private lateinit var binding: DeleteSecretFragmentBinding
   private lateinit var viewModel: DeleteSecretViewModel
-  private lateinit var secret: Secret
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
     (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
     activity?.title = "Delete an existing secret"
-    binding = DataBindingUtil.inflate(inflater, R.layout.delete_secret_fragment, container, false)
     viewModel = ViewModelProvider(
       this,
       DeleteSecretViewModelFactory(SecretManagerDatabase.getInstance((activity as AppCompatActivity).application).dao)
@@ -35,25 +32,24 @@ class DeleteSecretFragment : Fragment() {
         .setTitle("Delete Confirmation")
         .setMessage("Are your sure you want to delete ${it.label}?")
         .setNegativeButton("Close") { _, _ -> }
-        .setPositiveButton("Delete") { _, _ ->
-          secret = it
-          viewModel.delete(it)
-        }
+        .setPositiveButton("Delete") { _, _ -> viewModel.delete(it) }
         .setIcon(android.R.drawable.ic_delete)
         .show()
     }
-    binding.secretList.adapter = adapter
     viewModel.secrets.observe(viewLifecycleOwner) {
       if (it === null) return@observe
-      binding.secrets = it
       adapter.submitList(it.sortedBy { secret -> secret.label.lowercase() })
     }
-    viewModel.hasDeleteSecret.observe(viewLifecycleOwner) {
-      if (!it) return@observe
-      Toast.makeText(context, "The secret of ${secret.label} has been successfully deleted!", Toast.LENGTH_LONG).show()
+    viewModel.deletedSecret.observe(viewLifecycleOwner) {
+      if (it === null) return@observe
+      Toast.makeText(context, "The secret of ${it.label} has been successfully deleted!", Toast.LENGTH_LONG).show()
       findNavController().navigateUp()
-      viewModel.doneReactHasDeleteSecret()
+      viewModel.doneReactDeletedSecret()
     }
+    binding = DataBindingUtil.inflate(inflater, R.layout.delete_secret_fragment, container, false)
+    binding.lifecycleOwner = viewLifecycleOwner
+    binding.viewModel = viewModel
+    binding.secretList.adapter = adapter
     return binding.root
   }
 }
