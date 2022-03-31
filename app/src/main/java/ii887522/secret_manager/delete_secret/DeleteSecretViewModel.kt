@@ -11,17 +11,17 @@ import kotlinx.coroutines.launch
 class DeleteSecretViewModel(private val dao: SecretManagerDao) : ViewModel() {
   val secrets = dao.getAllLiveSecrets()
 
-  private val _hasDeleteSecret = MutableLiveData(false)
-  val hasDeleteSecret: LiveData<Boolean> get() = _hasDeleteSecret
+  private val _deletedSecret = MutableLiveData<Secret?>()
+  val deletedSecret: LiveData<Secret?> get() = _deletedSecret
 
   fun delete(secret: Secret) {
     viewModelScope.launch {
       dao.delete(secret)
-      _hasDeleteSecret.value = true
+      _deletedSecret.value = secret
     }
   }
 
-  fun doneReactHasDeleteSecret() {
-    _hasDeleteSecret.value = false
+  fun doneReactDeletedSecret() {
+    _deletedSecret.value = null
   }
 }

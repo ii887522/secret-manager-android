@@ -1,6 +1,5 @@
 package ii887522.secret_manager.any
 
-import android.content.res.Configuration
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -38,10 +37,5 @@ class MainFragment : Fragment() {
       activity?.finish()
     }
     return binding.root
-  }
-
-  override fun onConfigurationChanged(newConfig: Configuration) {
-    super.onConfigurationChanged(newConfig)
-    findNavController().navigate(MainFragmentDirections.actionMainFragmentSelf())
   }
 }

@@ -24,7 +24,10 @@ class ReadSecretFragment : Fragment() {
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
     (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
     activity?.title = "Read an existing secret"
-    binding = DataBindingUtil.inflate(inflater, R.layout.read_secret_fragment, container, false)
+    viewModel = ViewModelProvider(
+      this,
+      ReadSecretViewModelFactory(SecretManagerDatabase.getInstance((activity as AppCompatActivity).application).dao)
+    )[ReadSecretViewModel::class.java]
     val adapter = SecretListAdapter {
       requireNotNull(
         AlertDialog.Builder(requireContext())
@@ -37,16 +40,14 @@ class ReadSecretFragment : Fragment() {
       ).setColorFilter(Color.WHITE)
       findNavController().navigateUp()
     }
-    binding.secretList.adapter = adapter
-    viewModel = ViewModelProvider(
-      this,
-      ReadSecretViewModelFactory(SecretManagerDatabase.getInstance((activity as AppCompatActivity).application).dao)
-    )[ReadSecretViewModel::class.java]
     viewModel.secrets.observe(viewLifecycleOwner) {
       if (it === null) return@observe
-      binding.secrets = it
       adapter.submitList(it.sortedBy { secret -> secret.label.lowercase() })
     }
+    binding = DataBindingUtil.inflate(inflater, R.layout.read_secret_fragment, container, false)
+    binding.lifecycleOwner = viewLifecycleOwner
+    binding.viewModel = viewModel
+    binding.secretList.adapter = adapter
     return binding.root
   }
 }
